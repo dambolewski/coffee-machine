@@ -40,13 +40,14 @@ public enum MachineMethods {
                     makeCoffee(CoffeesInMachine.CAPPUCCINO);
                     break;
                 case "back":
+                    return IDLE;
                 default:
                     System.out.println("learn to type!");
             }
             return IDLE;
         }
     },
-    FILL_MACHINE{
+    FILL_MACHINE {
         @Override
         public MachineMethods nextState() {
             return FILL_WATER;
@@ -54,17 +55,17 @@ public enum MachineMethods {
     },
     FILL_WATER {
         @Override
-        public MachineMethods nextState(){
+        public MachineMethods nextState() {
             System.out.println("Write how many ml of water do you want to add:");
-            avWater += Integer.parseInt(getInput());
+            cmWater += Integer.parseInt(getInput());
             return FILL_MILK;
         }
     },
     FILL_MILK {
         @Override
-        public MachineMethods nextState(){
+        public MachineMethods nextState() {
             System.out.println("Write how many ml of milk do you want to add: ");
-            avMilk += Integer.parseInt(getInput());
+            cmMilk += Integer.parseInt(getInput());
             return FILL_COFFEE;
         }
 
@@ -73,7 +74,7 @@ public enum MachineMethods {
         @Override
         public MachineMethods nextState() {
             System.out.println("Write how many grams of coffee beans do you want to add: ");
-            avCoffeeBeans += Integer.parseInt(getInput());
+            cmCoffeeBeans += Integer.parseInt(getInput());
             return FILL_CUPS;
         }
     },
@@ -81,16 +82,16 @@ public enum MachineMethods {
         @Override
         public MachineMethods nextState() {
             System.out.println("Write how many disposable cups of coffee do you want to add: ");
-            avCups += Integer.parseInt(getInput());
+            cmCups += Integer.parseInt(getInput());
             return IDLE;
         }
     },
     TAKE_MONEY {
         @Override
         public MachineMethods nextState() {
-            System.out.println("I gave you "+avMoney);
+            System.out.println("I gave you " + cmMoney + "$");
             System.out.println();
-            avMoney=0;
+            cmMoney = 0;
             return IDLE;
         }
     },
@@ -98,11 +99,11 @@ public enum MachineMethods {
         @Override
         public MachineMethods nextState() {
             System.out.println("The coffee machine has");
-            System.out.println(avWater + " of water");
-            System.out.println(avMilk + " of milk");
-            System.out.println(avCoffeeBeans + " of coffee beans");
-            System.out.println(avCups + " of disposable cups");
-            System.out.println("$" + avMoney + " of money");
+            System.out.println(cmWater + " of water");
+            System.out.println(cmMilk + " of milk");
+            System.out.println(cmCoffeeBeans + " of coffee beans");
+            System.out.println(cmCups + " of disposable cups");
+            System.out.println("$" + cmMoney + " of money");
             System.out.println();
             return IDLE;
         }
@@ -116,41 +117,41 @@ public enum MachineMethods {
 
 
     public void makeCoffee(CoffeesInMachine coffee) {
-        int w = coffee.water;
-        int m = coffee.milk;
-        int c = coffee.coffeeBeans;
-        int p = coffee.price;
+        int water = coffee.water;
+        int milk = coffee.milk;
+        int coffeeBeans = coffee.coffeeBeans;
+        int price = coffee.price;
         int cups = 1;
 
-        if (avWater - w < 0) {
+        if (cmWater - water < 0) {
             System.out.println("Sorry not enough water! \n");
             return;
         }
-        if (avMilk - m < 0) {
+        if (cmMilk - milk < 0) {
             System.out.println("Sorry not enough milk! \n");
             return;
         }
-        if (avCoffeeBeans - c < 0) {
+        if (cmCoffeeBeans - coffeeBeans < 0) {
             System.out.println("Sorry not enough coffee beans! \n");
             return;
         }
-        if (avCups - cups < 0) {
+        if (cmCups - cups < 0) {
             System.out.println("Sorry not enough cups! \n");
         }
         System.out.println("I have enough resources, making you coffee \n");
-        avCups -= cups;
-        avWater -= w;
-        avMilk -= m;
-        avCoffeeBeans -= c;
-        avMoney += p;
+        cmCups -= cups;
+        cmWater -= water;
+        cmMilk -= milk;
+        cmCoffeeBeans -= coffeeBeans;
+        cmMoney += price;
     }
 
 
-    static int avWater = 400;
-    static int avMilk = 540;
-    static int avCoffeeBeans = 120;
-    static int avCups = 9;
-    static int avMoney = 550;
+    static int cmWater = 400;
+    static int cmMilk = 540;
+    static int cmCoffeeBeans = 120;
+    static int cmCups = 9;
+    static int cmMoney = 550;
 
     public abstract MachineMethods nextState();
 
